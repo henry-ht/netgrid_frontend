@@ -1,0 +1,29 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="LogInForm" name="LogInForm" >
+  <h1 class="text-center">
+    Login
+  </h1>
+  <div class="form-group mt-5 mb-3">
+      <label for="emailLogin">Email</label>
+      <input type="email" [ngClass]="{ 'is-invalid': isValid()['email'].dirty && isValid()['email'].errors }" class="form-control" id="emailLogin" formControlName="email" [readonly]="loadPage" aria-describedby="emailHelp" placeholder="Email">
+      <small *ngIf="isValid()['email'].errors && isValid()['email'].dirty" id="emailHelp" class="form-text text-muted">
+          Email es requerido
+      </small>
+  </div>
+  <div class="form-group">
+      <label for="passwordLogin">Contraseña</label>
+      <input type="password" [ngClass]="{ 'is-invalid': isValid()['password'].dirty && isValid()['password'].errors }" autocomplete="off" class="form-control"  [readonly]="loadPage" formControlName="password" aria-describedby="passwordlHelp" id="passwordLogin" placeholder="Contraseña">
+      <small *ngIf="isValid()['password'].errors && isValid()['password'].dirty" id="passwordlHelp" class="form-text text-muted">
+          La contraseña es requerida
+      </small>
+  </div>
+  <div class="p-2">
+    <p class="text-right">
+        <a [routerLink]="['/register']" >Register</a>
+    </p>
+  </div>
+  <button type="submit" class="btn btn-outline-info w-100" [disabled]="LogInForm.invalid || loadPage" >
+      <fa-icon *ngIf="!loadPage" [icon]="iconSent"></fa-icon>
+
+      <img src="assets/img/load/arrow.gif"  *ngIf="loadPage" alt="icono de carga" class="animated_animated animated_fadeIn img-fluid icon-load-mini" >
+  </button>
+</form>
