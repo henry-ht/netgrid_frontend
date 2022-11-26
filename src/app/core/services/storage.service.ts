@@ -9,18 +9,18 @@ export class StorageService {
   constructor(private local:LocalStorageService, private session:SessionStorageService) { }
 
   setInLocal(KEY:string, value:string, expired:number = 0) {
-    this.local.set(KEY, value, expired, 's');
+    this.session.set(KEY, value, expired, 's');
   }
 
   removeLocal(KEY:string) {
-    this.local.remove(KEY);
+    this.session.remove(KEY);
   }
 
   getInLocal(KEY:string):string {
-    return this.local.get(KEY);
+    return this.session.get(KEY);
   }
 
   clearLocal() {
-    this.local.clear();
+    this.session.clear();
   }
 }

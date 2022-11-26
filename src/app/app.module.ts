@@ -1,9 +1,9 @@
+import { AppInitializerService } from './core/services/app-initializer.service';
 import { ErrorInterceptor } from './core/intercectors/error.interceptor';
 import { ResponseInterceptor } from './core/intercectors/response.interceptor';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppLayoutComponent } from './layouts/app-layout/app-layout.component';
 import { RequestInterceptor } from './core/intercectors/request.interceptor';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -11,6 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { ToastrModule } from 'ngx-toastr';
+
+export function AppInit(appInitService: AppInitializerService) {
+  return (): Promise<any> => {
+    return appInitService.Init();
+  }
+}
 
 @NgModule({
   declarations: [
@@ -41,6 +47,13 @@ import { ToastrModule } from 'ngx-toastr';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
       multi: true
+    },
+    AppInitializerService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: AppInit,
+      multi: true,
+      deps: [AppInitializerService]
     },
   ],
   bootstrap: [AppComponent]

@@ -8,8 +8,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'netgrid_frontend';
-
-  constructor(private noti:NotificationService) {
-    this.noti.error('hola');
-  }
 }

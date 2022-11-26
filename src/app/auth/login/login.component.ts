@@ -50,9 +50,8 @@ export class LoginComponent {
     this.loadPage = true;
     this.request.save('login', this.LogInForm.value)
     .subscribe((data:any)=> {
-      if (data.status === 'success') {
-        let save:string =  JSON.stringify(data.data) || '';
-        this.storage.setInLocal('app_token', save);
+      if (data.status === true) {
+        this.storage.setInLocal('app_token', data.token);
 
         setTimeout(() => {
           window.location.reload();
