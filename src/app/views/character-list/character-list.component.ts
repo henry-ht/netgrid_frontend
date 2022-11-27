@@ -35,15 +35,6 @@ export class CharacterListComponent {
             for (const key in data.results) {
               if (Object.prototype.hasOwnProperty.call(data.results, key)) {
                 let element = data.results[key];
-                // element.isFavorite = false;
-                // for (const key_f in this.favorites) {
-                //   if (Object.prototype.hasOwnProperty.call(this.favorites, key_f)) {
-                //     const favorite = this.favorites[key_f];
-                //     if(favorite.id == element.id){
-                //       element.isFavorite = true;
-                //     }
-                //   }
-                // }
                 this.characters.push(element);
 
               }

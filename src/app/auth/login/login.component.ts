@@ -1,3 +1,4 @@
+import { NotificationService } from './../../core/services/notification.service';
 import { RequestService } from './../../core/services/request.service';
 
 import { StorageService } from './../../core/services/storage.service';
@@ -19,7 +20,7 @@ export class LoginComponent {
   LogInForm:FormGroup;
   closeResult = '';
 
-  constructor(private user:UserService, private fb: FormBuilder, private storage:StorageService, private router:Router, private request: RequestService) {
+  constructor(private user:UserService, private fb: FormBuilder, private storage:StorageService, private router:Router, private request: RequestService, private noti:NotificationService) {
     this.LogInForm = this.fb.group({
       email: ['', [
         Validators.required,
@@ -53,6 +54,7 @@ export class LoginComponent {
       next: (data:any)=> {
         if (data.status === true) {
           this.storage.setInLocal('app_token', data.token);
+          this.noti.success(data.message);
 
           setTimeout(() => {
             window.location.reload();

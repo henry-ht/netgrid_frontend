@@ -1,1 +1,68 @@
-<p>register works!</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="RegisterForm" name="RegisterForm"  autocomplete="off" >
+  <h1 class="text-center mt-2 mb-2">
+    Register
+  </h1>
+  <div class="form-group">
+      <label for="registerUser">Nombre completo</label>
+      <input type="text" [ngClass]="{ 'is-invalid': isValid()['name'].dirty && isValid()['name'].errors }" class="form-control" id="registerUser" formControlName="name" [readonly]="loadPage" aria-describedby="nameHelp" >
+      <small *ngIf="isValid()['name'].errors && isValid()['name'].dirty" id="nameHelp" class="form-text text-muted">
+          Nombre es requerido
+      </small>
+  </div>
+  <div class="form-group">
+      <label for="emailRegister">Email</label>
+      <input type="email" [ngClass]="{ 'is-invalid': isValid()['email'].dirty && isValid()['email'].errors }" class="form-control" id="emailRegister" formControlName="email" [readonly]="loadPage" aria-describedby="emailHelp" >
+      <small *ngIf="isValid()['email'].errors && isValid()['email'].dirty" id="emailHelp" class="form-text text-muted">
+          Email es requerido
+      </small>
+  </div>
+
+  <div class="form-group">
+      <label for="registercity">Ciudad</label>
+      <input type="text" [ngClass]="{ 'is-invalid': isValid()['city'].dirty && isValid()['city'].errors }" class="form-control" id="registercity" formControlName="city" [readonly]="loadPage" aria-describedby="cityHelp" >
+      <small *ngIf="isValid()['city'].errors && isValid()['city'].dirty" id="cityHelp" class="form-text text-muted">
+          celular es requerido
+      </small>
+  </div>
+  <div class="form-group">
+      <label for="passwordRegister">Contraseña</label>
+      <input type="password" [ngClass]="{ 'is-invalid': isValid()['password'].dirty && isValid()['password'].errors }" autocomplete="off" class="form-control"  [readonly]="loadPage" formControlName="password" aria-describedby="passwordlHelp" id="passwordRegister" >
+      <small *ngIf="isValid()['password'].errors && isValid()['password'].dirty" id="passwordlHelp" class="form-text text-muted">
+          La contraseña es requerida
+      </small>
+  </div>
+
+  <div class="form-group mb-3">
+      <label for="passwordConfirmRegister">Confirme Contraseña</label>
+      <input type="password" [ngClass]="{ 'is-invalid': isValid()['password_confirmation'].dirty && isValid()['password_confirmation'].errors }" autocomplete="off" class="form-control"  [readonly]="loadPage" formControlName="password_confirmation" aria-describedby="passwordConfirmHelp" id="passwordConfirmRegister" >
+      <small *ngIf="isValid()['password_confirmation'].errors && isValid()['password_confirmation'].dirty" id="passwordConfirmHelp" class="form-text text-muted">
+          La contraseña es requerida
+      </small>
+
+      <small *ngIf="isValid()['password_confirmation'].invalid && isValid()['password_confirmation'].dirty" id="passwordConfirm2Help" class="form-text text-warning">
+          La contraseña no coinside
+      </small>
+  </div>
+
+  <div class="form-check mb-5">
+      <input type="checkbox" class="form-check-input" id="acceptPolicies" formControlName="accept_policies" [ngClass]="{ 'is-invalid': isValid()['accept_policies'].dirty && isValid()['accept_policies'].errors }" >
+      <label class="form-check-label" for="acceptPolicies">
+          He leído y acepto <a href="#" target="_blank" >las Política de privacidad</a> y <a href="#" target="_blank" >Términos y condiciones</a>
+      </label>
+
+      <small *ngIf="isValid()['accept_policies'].errors && isValid()['accept_policies'].dirty" class="form-text text-muted d-block">
+          Debe aceptar nuestras políticas
+      </small>
+  </div>
+
+
+  <div class="w-100 text-right">
+  </div>
+
+  <button type="submit" class="btn btn-info w-100" [ngClass]="{'text-white': !(RegisterForm.invalid || loadPage)}" [disabled]="RegisterForm.invalid || loadPage" >
+      Registrarse <fa-icon *ngIf="!loadPage" [icon]="iconSent"></fa-icon>
+
+      <img src="assets/img/load/arrow.gif"  *ngIf="loadPage" alt="icono de carga" class="animated_animated animated_fadeIn img-fluid icon-load-mini" >
+  </button>
+</form>
+

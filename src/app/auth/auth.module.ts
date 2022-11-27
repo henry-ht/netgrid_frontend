@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
   exports: [
     RegisterComponent,
     FontAwesomeModule,
+    ReactiveFormsModule,
     LoginComponent
   ],
   imports: [

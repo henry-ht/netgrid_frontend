@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ViewsRoutingModule } from './views-routing.module';
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
@@ -20,6 +21,7 @@ import { CharacterListComponent } from './character-list/character-list.componen
   imports: [
     CommonModule,
     FontAwesomeModule,
+    ReactiveFormsModule,
     ViewsRoutingModule
   ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
