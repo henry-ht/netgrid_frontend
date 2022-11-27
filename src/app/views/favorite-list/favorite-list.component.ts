@@ -24,7 +24,7 @@ export class FavoriteListComponent {
     this.getFavorites();
   }
   idsFavorites(): string{
-    let favoriteString:string = this.favorites.map(favorite=>favorite.id).join(",");
+    let favoriteString:string = this.favorites.map(favorite=>favorite.ref_api).join(",");
 
     return favoriteString;
   }
@@ -35,15 +35,19 @@ export class FavoriteListComponent {
       this.request.get(this.nextPage+this.idsFavorites(), null, true)
       .subscribe({
         next: (data:any)=> {
-          if (data.length) {
-            for (const key in data) {
-              if (Object.prototype.hasOwnProperty.call(data, key)) {
-                let element = data[key];
-                this.characters.push(element);
-
+          if(this.favorites.length == 1){
+            this.characters.push(data);
+          }else{
+            if (data.length) {
+              for (const key in data) {
+                if (Object.prototype.hasOwnProperty.call(data, key)) {
+                  let element = data[key];
+                  this.characters.push(element);
+                }
               }
             }
           }
+
         },
         error: () => { this.loadPage = false},
         complete: () => {this.loadPage = false}
@@ -58,7 +62,13 @@ export class FavoriteListComponent {
     .subscribe({
       next: (data:any)=> {
         if (typeof(data.data) != "undefined") {
-          this.favorites = data.data;
+
+          for (const key in data.data) {
+            if (Object.prototype.hasOwnProperty.call(data.data, key)) {
+              const element = data.data[key];
+              this.favorites.push(element);
+            }
+          }
         }
         this.get();
       },
@@ -67,13 +77,23 @@ export class FavoriteListComponent {
   }
 
   RemoteFavorite(id:number){
+    let ref_api:number = 0;
     this.loadPage = true;
-    this.request.delete('favorite/'+id)
+    for (const key in this.favorites) {
+      if (Object.prototype.hasOwnProperty.call(this.favorites, key)) {
+        const element = this.favorites[key];
+        if(element.ref_api == String(id)){
+          ref_api = element.id;
+        }element
+      }
+    }
+    this.request.delete('favorite/'+ref_api)
     .subscribe({
       next: (data:any)=> {
         if(data.status == true){
           this.noti.success(data.message);
           this.characters = [];
+          this.favorites = [];
           this.getFavorites();
         }
         this.loadPage = false
