@@ -18,10 +18,9 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError(error => {
-        console.log('errrorrrrr')
-        setTimeout(() => {
-          this.noti.error('Servidor no encontrado');
-        }, 500);
+        if(typeof(error.error.message) != undefined){
+          this.noti.error(error.error.message);
+        }
         return throwError(error);
       })
     );

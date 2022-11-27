@@ -19,11 +19,11 @@ export class AccessGuard implements CanActivate {
       return this.user.isLoggedIn$().pipe(
         take(1),
         map((isOk:boolean) => {
-          // if(isOk){
+          if(isOk){
             return true;
-          // }else{
-          //   return this.router.parseUrl('/login');
-          // }
+          }else{
+            return this.router.parseUrl('/login');
+          }
         })
       );
   }

@@ -15,7 +15,7 @@ export class AppInitializerService {
       if(this.toke){
         this.user.setIsLoggedIn(true);
       }
-        resolve();
+      resolve();
     });
   }
 }

@@ -1,3 +1,4 @@
+import { PartsModule } from './parts/parts.module';
 import { AppInitializerService } from './core/services/app-initializer.service';
 import { ErrorInterceptor } from './core/intercectors/error.interceptor';
 import { ResponseInterceptor } from './core/intercectors/response.interceptor';
@@ -11,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function AppInit(appInitService: AppInitializerService) {
   return (): Promise<any> => {
@@ -25,12 +27,15 @@ export function AppInit(appInitService: AppInitializerService) {
     AppLayoutComponent
   ],
   imports: [
+    PartsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     ToastrModule.forRoot(),
   ],
   exports: [
+    PartsModule
   ],
   providers: [
     {

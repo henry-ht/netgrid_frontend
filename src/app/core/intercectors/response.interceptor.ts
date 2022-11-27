@@ -26,7 +26,6 @@ export class ResponseInterceptor implements HttpInterceptor {
 
   private modifyBody(body:any) {
     let msg = '';
-    console.log('"que vienes a buscar')
     if(body){
       switch (body['status']) {
         case 'error':

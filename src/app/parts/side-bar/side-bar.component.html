@@ -1,0 +1,19 @@
+<section class="w-100 pt-5">
+  <header class="w-100 p-2 text-center">
+    <h5>
+      {{name}}
+    </h5>
+  </header>
+  <div class="w-100 mt-3">
+    <ul class="list-group list-group-flush bg-app-list">
+      <li class="list-group-item px-0 py-1" routerLinkActive="active-list" *ngFor="let item of listItems" >
+        <a class="w-100 text-capitalize btn btn-link text-start" [routerLink]="[item.url]"  >
+          {{item.name}}
+          <span class="float-end">
+            <fa-icon  [icon]="item.icon"  ></fa-icon>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>

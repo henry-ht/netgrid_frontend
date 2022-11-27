@@ -1,0 +1,39 @@
+.bg-app-list li{
+  background-color:#262933;
+  transition: all 0.4s;
+}
+
+.bg-app-list li a{
+  color: white;
+}
+
+.bg-app-list li a:hover{
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.bg-app-list li a:active{
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+.bg-app-list li a:focus{
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+.bg-app-list li:hover{
+  text-decoration: none;
+  outline: none;
+  box-shadow: none;
+  background-color: #3e3349;
+}
+
+.bg-app-list li.active-list{
+  background-color: #202020;
+}

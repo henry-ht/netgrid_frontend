@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<div class="wrapper">
+  <aside id="sidebar" [ngClass]="{'sideBar-active': menuToggle}" class="sticky-top" >
+
+    <app-side-bar></app-side-bar>
+  </aside>
+  <div id="app-content" class="flex-md-fill w-100" >
+    <app-nav-bar></app-nav-bar>
+    <main class="container-fluid pt-3 clearfix">
+      <router-outlet></router-outlet>
+      <app-footer></app-footer>
+    </main>
+  </div>
+</div>

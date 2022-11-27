@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 const addData:object = {
-  redirect: '/dashboard'
+  redirect: '/login'
 };
 
 const routes: Routes = [

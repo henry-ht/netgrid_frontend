@@ -49,15 +49,18 @@ export class LoginComponent {
   onSubmit(){
     this.loadPage = true;
     this.request.save('login', this.LogInForm.value)
-    .subscribe((data:any)=> {
-      if (data.status === true) {
-        this.storage.setInLocal('app_token', data.token);
+    .subscribe({
+      next: (data:any)=> {
+        if (data.status === true) {
+          this.storage.setInLocal('app_token', data.token);
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      }
-    }, null, () =>   this.loadPage = false);
-
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      },
+      error: () => { this.loadPage = false},
+      complete: () => {this.loadPage = false}
+    });
   }
 }

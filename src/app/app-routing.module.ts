@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: AppLayoutComponent,
-  //   loadChildren: () => import('./views/views.module').then(i => i.ViewsModule),
-  // },
+  {
+    path: '',
+    component: AppLayoutComponent,
+    loadChildren: () => import('./views/views.module').then(i => i.ViewsModule),
+  },
   {
     path: '',
     component: AuthLayoutComponent,
