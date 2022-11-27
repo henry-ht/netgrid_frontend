@@ -1,6 +1,7 @@
+import { NotificationService } from './../../core/services/notification.service';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { RequestService } from './../../core/services/request.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-character-list',
@@ -11,27 +12,49 @@ export class CharacterListComponent {
   characters:any = [];
   favorites:any = [];
   faStar = faStar;
+  prePage:string = "";
+  nextPage:string = 'https://rickandmortyapi.com/api/character';
   loadPage:boolean = false;
+  @ViewChild('scrollElement') scrollElement: ElementRef;
 
-  constructor(private request: RequestService) {}
+  constructor(private request: RequestService, private noti:NotificationService) {}
 
   ngOnInit(): void {
     this.getFavorites();
   }
 
   get(){
-    this.loadPage = true;
-    this.request.get('https://rickandmortyapi.com/api/character', null, true)
-    .subscribe({
-      next: (data:any)=> {
-        console.log(data)
-        if (data.results.length) {
-          this.characters = data.results;
-        }
-      },
-      error: () => { this.loadPage = false},
-      complete: () => {this.loadPage = false}
-    });
+    if(this.prePage != this.nextPage){
+      this.loadPage = true;
+      this.request.get(this.nextPage, null, true)
+      .subscribe({
+        next: (data:any)=> {
+          if (data.results.length) {
+            this.prePage = this.nextPage;
+            this.nextPage = data.info.next;
+            for (const key in data.results) {
+              if (Object.prototype.hasOwnProperty.call(data.results, key)) {
+                let element = data.results[key];
+                // element.isFavorite = false;
+                // for (const key_f in this.favorites) {
+                //   if (Object.prototype.hasOwnProperty.call(this.favorites, key_f)) {
+                //     const favorite = this.favorites[key_f];
+                //     if(favorite.id == element.id){
+                //       element.isFavorite = true;
+                //     }
+                //   }
+                // }
+                this.characters.push(element);
+
+              }
+            }
+          }
+        },
+        error: () => { this.loadPage = false},
+        complete: () => {this.loadPage = false}
+      });
+
+    }
   }
 
   getFavorites(){
@@ -39,7 +62,6 @@ export class CharacterListComponent {
     this.request.get('favorite')
     .subscribe({
       next: (data:any)=> {
-        console.log('favorites: ', data)
         if (typeof(data.data) != "undefined") {
           this.favorites = data.data;
         }
@@ -51,26 +73,33 @@ export class CharacterListComponent {
 
 
   addFavorite(id:number){
+    this.loadPage = true;
     this.request.save('favorite', {
       'ref_api': id
     })
     .subscribe({
       next: (data:any)=> {
-
+        if(data.status == true){
+          this.noti.success(data.message);
+        }
+        this.loadPage = false
       },
       error: () => { this.loadPage = false},
       complete: () => {this.loadPage = false}
     });
   }
 
-  RemoteFavorite(id:number){
-    this.request.delete('favorite/'+id)
-    .subscribe({
-      next: (data:any)=> {
+  @HostListener("window:scroll", ["$event"])
+  onWindowScroll() {
+        var rect = this.scrollElement.nativeElement.getBoundingClientRect();
+        var elemTop = rect.top;
+        var elemBottom = rect.bottom;
 
-      },
-      error: () => { this.loadPage = false},
-      complete: () => {this.loadPage = false}
-    });
+          if((elemTop >= 0) && (elemBottom <= window.innerHeight))   {
+            if(this.loadPage == false){
+              this.get();
+            }
+        }
   }
+
 }

@@ -1,1 +1,18 @@
-<p>favorite-list works!</p>
+<section class="row"  >
+  <aside class="col-md-3 col-lg-2 mb-3" *ngFor="let character of characters" >
+    <div class="card border-0" >
+      <img [src]="character.image" class="card-img-top" [alt]="character.name">
+      <div class="card-body d-flex flex-row justify-content-between border-end border-bottom border-start">
+        <p class="card-text mb-0">
+          {{character.name}}
+        </p>
+        <button type="button" [disabled]="loadPage" class="btn btn-link" (click)="RemoteFavorite(character.id)" >
+          <fa-icon  [icon]="faTrash"  ></fa-icon>
+        </button>
+      </div>
+    </div>
+  </aside>
+  <aside class="col-md-12 px-3" #scrollElement  >
+    <img src="assets/img/load/arrow.gif" *ngIf="loadPage" alt="icono de carga" class="d-block mx-auto  img-fluid icon-load-max" >
+  </aside>
+</section>
